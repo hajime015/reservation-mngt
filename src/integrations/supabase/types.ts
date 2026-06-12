@@ -14,16 +14,159 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
+      reservations: {
+        Row: {
+          arrival: string
+          created_at: string
+          date: string
+          id: string
+          name: string
+          notes: string
+          pax: number
+          phone: string
+          staff: string
+          status: string
+          table: string
+          time: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          arrival?: string
+          created_at?: string
+          date: string
+          id?: string
+          name?: string
+          notes?: string
+          pax?: number
+          phone?: string
+          staff?: string
+          status?: string
+          table?: string
+          time?: string
+          type?: string
+          updated_at?: string
+        }
+        Update: {
+          arrival?: string
+          created_at?: string
+          date?: string
+          id?: string
+          name?: string
+          notes?: string
+          pax?: number
+          phone?: string
+          staff?: string
+          status?: string
+          table?: string
+          time?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      restaurant_tables: {
+        Row: {
+          cap: number
+          created_at: string
+          icon: string
+          id: string
+          name: string
+          override: string
+          sort_order: number
+        }
+        Insert: {
+          cap?: number
+          created_at?: string
+          icon?: string
+          id?: string
+          name: string
+          override?: string
+          sort_order?: number
+        }
+        Update: {
+          cap?: number
+          created_at?: string
+          icon?: string
+          id?: string
+          name?: string
+          override?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      staff: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "staff"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +293,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "staff"],
+    },
   },
 } as const
