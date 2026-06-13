@@ -215,7 +215,7 @@
 .gm-btn-ghost { background: var(--gm-border); color: var(--text-mid); }
 .gm-btn-outline { background: transparent; border: 1px solid var(--gm-border); color: var(--text-mid); }
 .gm-menu-btn { background: var(--gm-white); border: 1px solid var(--gm-border); border-radius: 12px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; box-shadow: var(--shadow-sm); }
-.gm-page { padding: 28px 24px; animation: gmFadeUp 0.25s ease; }
+.gm-page { padding: 28px 24px; animation: gmFadeUp 0.25s ease; max-width: 1280px; margin: 0 auto; width: 100%; }
 @keyframes gmFadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 .gm-heading { font-size: 26px; font-weight: 700; }
 
