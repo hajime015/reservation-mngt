@@ -36,6 +36,7 @@ export const STATUSES: ResStatus[] = [
   "Confirmed",
   "Seated",
   "Pending",
+  "Done",
   "No-Show",
   "Cancelled",
 ];
