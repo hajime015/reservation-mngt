@@ -241,6 +241,14 @@ export default function GuestManagerApp() {
     showToast("Deleted");
   }
 
+  // Mark a guest as Done — frees up their table on the map.
+  function markDone(id: number) {
+    setReservations((prev) =>
+      prev.map((r) => (r.id === id ? { ...r, status: "Done" as ResStatus } : r)),
+    );
+    showToast("Marked as done · table freed");
+  }
+
   // ---------- staff ----------
   function addStaff() {
     const name = newStaff.trim();
@@ -480,7 +488,6 @@ export default function GuestManagerApp() {
           {/* ---------- DASHBOARD ---------- */}
           {page === "dashboard" && (
             <div className="gm-page">
-              <p className="display gm-heading">Good evening 👋</p>
               <p style={{ color: "var(--text-soft)", marginBottom: 24 }}>
                 Today's snapshot
               </p>
@@ -559,12 +566,13 @@ export default function GuestManagerApp() {
                         <th>Table</th>
                         <th>Status</th>
                         <th>Notes</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       {todayRows.length === 0 ? (
                         <tr>
-                          <td colSpan={7} style={{ textAlign: "center", padding: 32 }}>
+                          <td colSpan={8} style={{ textAlign: "center", padding: 32 }}>
                             No entries today
                           </td>
                         </tr>
@@ -586,6 +594,19 @@ export default function GuestManagerApp() {
                               </span>
                             </td>
                             <td style={{ maxWidth: 180 }}>{r.notes || "—"}</td>
+                            <td style={{ whiteSpace: "nowrap" }}>
+                              {r.status === "Done" ? (
+                                <span className="gm-badge gm-badge-done">🏁 Done</span>
+                              ) : (
+                                <button
+                                  className="gm-btn gm-btn-ghost"
+                                  style={{ padding: "6px 14px", fontSize: 12 }}
+                                  onClick={() => markDone(r.id)}
+                                >
+                                  🏁 Done
+                                </button>
+                              )}
+                            </td>
                           </tr>
                         ))
                       )}
@@ -700,6 +721,15 @@ export default function GuestManagerApp() {
                             <td>{r.staff || "—"}</td>
                             <td style={{ maxWidth: 140 }}>{r.notes || "—"}</td>
                             <td style={{ whiteSpace: "nowrap" }}>
+                              {r.status !== "Done" && (
+                                <button
+                                  className="gm-icon-btn gm-icon-btn-done"
+                                  title="Mark done (free table)"
+                                  onClick={() => markDone(r.id)}
+                                >
+                                  🏁
+                                </button>
+                              )}
                               <button
                                 className="gm-icon-btn gm-icon-btn-edit"
                                 onClick={() => openEdit(r.id)}
