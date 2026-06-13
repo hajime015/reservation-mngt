@@ -572,7 +572,7 @@ export default function GuestManagerApp() {
                     <tbody>
                       {todayRows.length === 0 ? (
                         <tr>
-                          <td colSpan={7} style={{ textAlign: "center", padding: 32 }}>
+                          <td colSpan={8} style={{ textAlign: "center", padding: 32 }}>
                             No entries today
                           </td>
                         </tr>
