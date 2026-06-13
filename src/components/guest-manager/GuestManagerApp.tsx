@@ -594,6 +594,19 @@ export default function GuestManagerApp() {
                               </span>
                             </td>
                             <td style={{ maxWidth: 180 }}>{r.notes || "—"}</td>
+                            <td style={{ whiteSpace: "nowrap" }}>
+                              {r.status === "Done" ? (
+                                <span className="gm-badge gm-badge-done">🏁 Done</span>
+                              ) : (
+                                <button
+                                  className="gm-btn gm-btn-ghost"
+                                  style={{ padding: "6px 14px", fontSize: 12 }}
+                                  onClick={() => markDone(r.id)}
+                                >
+                                  🏁 Done
+                                </button>
+                              )}
+                            </td>
                           </tr>
                         ))
                       )}
