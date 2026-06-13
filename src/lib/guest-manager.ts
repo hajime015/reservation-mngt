@@ -87,6 +87,7 @@ export function badgeClass(s: ResStatus): string {
     Confirmed: "confirmed",
     Seated: "seated",
     Pending: "pending",
+    Done: "done",
     "No-Show": "noshow",
     Cancelled: "cancelled",
   };
@@ -98,6 +99,7 @@ export function statusIcon(s: ResStatus): string {
     Confirmed: "✅",
     Seated: "🪑",
     Pending: "⏳",
+    Done: "🏁",
     "No-Show": "❌",
     Cancelled: "🚫",
   };
