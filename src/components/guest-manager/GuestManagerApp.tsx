@@ -707,6 +707,15 @@ export default function GuestManagerApp() {
                             <td>{r.staff || "—"}</td>
                             <td style={{ maxWidth: 140 }}>{r.notes || "—"}</td>
                             <td style={{ whiteSpace: "nowrap" }}>
+                              {r.status !== "Done" && (
+                                <button
+                                  className="gm-icon-btn gm-icon-btn-done"
+                                  title="Mark done (free table)"
+                                  onClick={() => markDone(r.id)}
+                                >
+                                  🏁
+                                </button>
+                              )}
                               <button
                                 className="gm-icon-btn gm-icon-btn-edit"
                                 onClick={() => openEdit(r.id)}
