@@ -139,7 +139,7 @@ export function checkTableConflict(
         r.table === table &&
         r.date === date &&
         r.id !== excludeId &&
-        !["Cancelled", "No-Show"].includes(r.status),
+        !["Cancelled", "No-Show", "Done"].includes(r.status),
     ) || null
   );
 }
