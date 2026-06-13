@@ -241,6 +241,14 @@ export default function GuestManagerApp() {
     showToast("Deleted");
   }
 
+  // Mark a guest as Done — frees up their table on the map.
+  function markDone(id: number) {
+    setReservations((prev) =>
+      prev.map((r) => (r.id === id ? { ...r, status: "Done" as ResStatus } : r)),
+    );
+    showToast("Marked as done · table freed");
+  }
+
   // ---------- staff ----------
   function addStaff() {
     const name = newStaff.trim();
