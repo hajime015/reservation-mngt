@@ -566,6 +566,7 @@ export default function GuestManagerApp() {
                         <th>Table</th>
                         <th>Status</th>
                         <th>Notes</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
