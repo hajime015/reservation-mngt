@@ -11,7 +11,6 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { supabase } from "@/integrations/supabase/client";
 
 function NotFoundComponent() {
   return (
@@ -77,26 +76,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: "Guest Manager · Reservations" },
-      { name: "description", content: "Smart restaurant reservation manager with live table map, repeat-guest detection, and staff management." },
-      { name: "author", content: "Guest Manager" },
-      { name: "theme-color", content: "#0f1f38" },
-      { property: "og:title", content: "Guest Manager · Reservations" },
-      { property: "og:description", content: "Smart restaurant reservation manager with live table map and staff management." },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "RESERVATION" },
+      { name: "description", content: "Pixel Perfect is a full-stack restaurant guest manager app with cloud backend and staff login." },
+      { name: "author", content: "Lovable" },
+      { property: "og:title", content: "RESERVATION" },
+      { property: "og:description", content: "Pixel Perfect is a full-stack restaurant guest manager app with cloud backend and staff login." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "RESERVATION" },
+      { name: "twitter:description", content: "Pixel Perfect is a full-stack restaurant guest manager app with cloud backend and staff login." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0697c857-faee-4513-be99-f0bef2cc2eee/id-preview-54ef9697--9336bd26-def5-4f70-9e65-9d545d59ba38.lovable.app-1781258283108.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0697c857-faee-4513-be99-f0bef2cc2eee/id-preview-54ef9697--9336bd26-def5-4f70-9e65-9d545d59ba38.lovable.app-1781258283108.png" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
-      },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap",
       },
     ],
   }),
@@ -122,16 +119,6 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const router = useRouter();
-
-  useEffect(() => {
-    const { data: sub } = supabase.auth.onAuthStateChange((event) => {
-      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
-      router.invalidate();
-      if (event !== "SIGNED_OUT") queryClient.invalidateQueries();
-    });
-    return () => sub.subscription.unsubscribe();
-  }, [router, queryClient]);
 
   return (
     <QueryClientProvider client={queryClient}>
