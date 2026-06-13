@@ -2,6 +2,7 @@ export type ResStatus =
   | "Confirmed"
   | "Seated"
   | "Pending"
+  | "Done"
   | "No-Show"
   | "Cancelled";
 export type ResType = "Reservation" | "Walk-In";
