@@ -57,6 +57,7 @@ export async function saveReservations(list: Reservation[]): Promise<void> {
       notes: r.notes,
       staff: r.staff,
       arrival: r.arrival,
+      departed: r.departed,
     })),
   );
   if (error) throw error;
