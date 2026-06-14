@@ -413,8 +413,29 @@ export default function GuestManagerApp() {
       ...f,
       name: f.name.trim() || g.name,
       notes: f.notes.trim() || g.notes,
+      pax: f.pax || g.pax,
     }));
     showToast(`Loaded ${g.name}`);
+  }
+
+  // Auto-fill guest details from the most recent record matching the phone.
+  function onPhoneChange(phone: string) {
+    setForm((f) => {
+      const next = { ...f, phone };
+      const trimmed = phone.trim();
+      if (trimmed.length < 4) return next;
+      const match = reservations
+        .filter(
+          (r) => r.phone && r.phone.trim() === trimmed && r.id !== f.editId,
+        )
+        .sort((a, b) => +new Date(b.date) - +new Date(a.date))[0];
+      if (match) {
+        if (!next.name.trim()) next.name = match.name;
+        if (!next.notes.trim()) next.notes = match.notes;
+        if (!next.pax) next.pax = match.pax;
+      }
+      return next;
+    });
   }
 
   const navItems: { id: Page; icon: string; label: string }[] = [
