@@ -366,19 +366,22 @@ export default function GuestManagerApp() {
   }));
   const maxTime = Math.max(1, ...timeBars.map((b) => b.count));
 
-  const filtered = reservations.filter((r) => {
-    const q = search.toLowerCase();
-    return (
-      (!fDate || r.date === fDate) &&
-      (!fType || r.type === fType) &&
-      (!fStatus || r.status === fStatus) &&
-      (!q ||
-        [r.name, r.phone, r.notes, r.table, r.staff]
-          .join(" ")
-          .toLowerCase()
-          .includes(q))
-    );
-  });
+  const filtered = reservations
+    .filter((r) => {
+      const q = search.toLowerCase();
+      return (
+        // Selecting a date pulls out the full history up to and including it.
+        (!fDate || r.date <= fDate) &&
+        (!fType || r.type === fType) &&
+        (!fStatus || r.status === fStatus) &&
+        (!q ||
+          [r.name, r.phone, r.notes, r.table, r.staff]
+            .join(" ")
+            .toLowerCase()
+            .includes(q))
+      );
+    })
+    .sort((a, b) => +new Date(b.date) - +new Date(a.date));
   const filteredPax = filtered.reduce((s, r) => s + (Number(r.pax) || 0), 0);
 
   const mapCounts: Record<TableState, number> = {
@@ -413,8 +416,29 @@ export default function GuestManagerApp() {
       ...f,
       name: f.name.trim() || g.name,
       notes: f.notes.trim() || g.notes,
+      pax: f.pax || g.pax,
     }));
     showToast(`Loaded ${g.name}`);
+  }
+
+  // Auto-fill guest details from the most recent record matching the phone.
+  function onPhoneChange(phone: string) {
+    setForm((f) => {
+      const next = { ...f, phone };
+      const trimmed = phone.trim();
+      if (trimmed.length < 4) return next;
+      const match = reservations
+        .filter(
+          (r) => r.phone && r.phone.trim() === trimmed && r.id !== f.editId,
+        )
+        .sort((a, b) => +new Date(b.date) - +new Date(a.date))[0];
+      if (match) {
+        if (!next.name.trim()) next.name = match.name;
+        if (!next.notes.trim()) next.notes = match.notes;
+        if (!next.pax) next.pax = match.pax;
+      }
+      return next;
+    });
   }
 
   const navItems: { id: Page; icon: string; label: string }[] = [
@@ -940,7 +964,7 @@ export default function GuestManagerApp() {
                     type="text"
                     placeholder="Contact number"
                     value={form.phone}
-                    onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
+                    onChange={(e) => onPhoneChange(e.target.value)}
                   />
                 </div>
               </div>
