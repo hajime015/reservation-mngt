@@ -47,6 +47,7 @@ interface FormState {
   status: ResStatus;
   notes: string;
   staff: string;
+  departed: string;
 }
 
 const emptyForm: FormState = {
