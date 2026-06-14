@@ -961,7 +961,7 @@ export default function GuestManagerApp() {
                     type="text"
                     placeholder="Contact number"
                     value={form.phone}
-                    onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
+                    onChange={(e) => onPhoneChange(e.target.value)}
                   />
                 </div>
               </div>
