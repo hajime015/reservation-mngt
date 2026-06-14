@@ -246,7 +246,8 @@ export default function GuestManagerApp() {
       status: form.status,
       notes: form.notes,
       staff: form.staff,
-      arrival: "",
+      arrival: form.status === "Seated" ? to12h(form.time) : "",
+      departed: form.status === "Done" ? form.departed : "",
     };
     setReservations((prev) =>
       form.editId
