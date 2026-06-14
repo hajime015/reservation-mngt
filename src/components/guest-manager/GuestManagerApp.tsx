@@ -979,26 +979,49 @@ export default function GuestManagerApp() {
                     onChange={(e) => setForm((f) => ({ ...f, table: e.target.value }))}
                   >
                     <option value="">-- Select --</option>
-                    {tableList.map((t) => (
-                      <option key={t.name}>{t.name}</option>
-                    ))}
+                    {tableList
+                      .filter((t) => {
+                        if (t.name === form.table) return true;
+                        if (t.override && t.override !== "available") return false;
+                        return !checkTableConflict(
+                          reservations,
+                          t.name,
+                          form.date,
+                          form.editId,
+                        );
+                      })
+                      .map((t) => (
+                        <option key={t.name}>{t.name}</option>
+                      ))}
                   </select>
                 </div>
               </div>
               <div className="gm-form-row">
                 <div className="gm-form-group">
                   <label>Status</label>
-                  <select
-                    value={form.status}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, status: e.target.value as ResStatus }))
-                    }
-                  >
-                    {STATUSES.map((s) => (
-                      <option key={s}>{s}</option>
-                    ))}
-                  </select>
+                  <div className="gm-type-toggle">
+                    <button
+                      type="button"
+                      className={`gm-type-opt${form.status !== "Done" ? " active-res" : ""}`}
+                      onClick={() => setArrivalState("Arrived")}
+                    >
+                      ✅ Arrived
+                    </button>
+                    <button
+                      type="button"
+                      className={`gm-type-opt${form.status === "Done" ? " active-wi" : ""}`}
+                      onClick={() => setArrivalState("Departed")}
+                    >
+                      🏁 Departed
+                    </button>
+                  </div>
+                  {form.status === "Done" && form.departed && (
+                    <p style={{ fontSize: 12, color: "var(--text-soft)", marginTop: 6 }}>
+                      Departed at {form.departed}
+                    </p>
+                  )}
                 </div>
+
                 <div className="gm-form-group">
                   <label>Staff</label>
                   <select
