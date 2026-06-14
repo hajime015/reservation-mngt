@@ -1,0 +1,1 @@
+ALTER TABLE public.reservations ADD COLUMN IF NOT EXISTS departed text NOT NULL DEFAULT '';
