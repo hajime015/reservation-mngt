@@ -20,6 +20,7 @@ export interface Reservation {
   notes: string;
   staff: string;
   arrival: string;
+  departed: string;
 }
 
 export interface TableDef {
@@ -42,10 +43,10 @@ export const STATUSES: ResStatus[] = [
 ];
 
 export const DEFAULT_RESERVATIONS: Reservation[] = [
-  { id: 1, name: "Maria Santos", phone: "+63 912 345 6789", type: "Reservation", date: "2025-07-15", time: "07:00 PM", pax: 4, table: "Table 5", status: "Confirmed", notes: "Birthday cake", staff: "Ana Cruz", arrival: "" },
-  { id: 2, name: "Juan dela Cruz", phone: "+63 917 654 3210", type: "Reservation", date: "2025-07-15", time: "07:30 PM", pax: 2, table: "Table 2", status: "Confirmed", notes: "Anniversary", staff: "Ben Reyes", arrival: "" },
-  { id: 3, name: "Walk-in Guest", phone: "", type: "Walk-In", date: "2025-07-15", time: "06:45 PM", pax: 6, table: "Table 8", status: "Seated", notes: "High chair", staff: "Ana Cruz", arrival: "06:47 PM" },
-  { id: 4, name: "Sarah Lee", phone: "+63 999 111 2233", type: "Reservation", date: "2025-07-16", time: "12:00 PM", pax: 3, table: "Private Room", status: "Confirmed", notes: "Nut allergy", staff: "Carlo Diaz", arrival: "" },
+  { id: 1, name: "Maria Santos", phone: "+63 912 345 6789", type: "Reservation", date: "2025-07-15", time: "07:00 PM", pax: 4, table: "Table 5", status: "Confirmed", notes: "Birthday cake", staff: "Ana Cruz", arrival: "", departed: "" },
+  { id: 2, name: "Juan dela Cruz", phone: "+63 917 654 3210", type: "Reservation", date: "2025-07-15", time: "07:30 PM", pax: 2, table: "Table 2", status: "Confirmed", notes: "Anniversary", staff: "Ben Reyes", arrival: "", departed: "" },
+  { id: 3, name: "Walk-in Guest", phone: "", type: "Walk-In", date: "2025-07-15", time: "06:45 PM", pax: 6, table: "Table 8", status: "Seated", notes: "High chair", staff: "Ana Cruz", arrival: "06:47 PM", departed: "" },
+  { id: 4, name: "Sarah Lee", phone: "+63 999 111 2233", type: "Reservation", date: "2025-07-16", time: "12:00 PM", pax: 3, table: "Private Room", status: "Confirmed", notes: "Nut allergy", staff: "Carlo Diaz", arrival: "", departed: "" },
 ];
 
 export const DEFAULT_TABLES: TableDef[] = [

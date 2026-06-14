@@ -47,6 +47,7 @@ interface FormState {
   status: ResStatus;
   notes: string;
   staff: string;
+  departed: string;
 }
 
 const emptyForm: FormState = {
@@ -62,6 +63,7 @@ const emptyForm: FormState = {
   status: "Confirmed",
   notes: "",
   staff: "",
+  departed: "",
 };
 
 function typeBadge(t: ResType) {
@@ -153,12 +155,21 @@ export default function GuestManagerApp() {
   }, []);
 
   // ---------- modal helpers ----------
+  function nowTime24() {
+    const d = new Date();
+    return `${d.getHours().toString().padStart(2, "0")}:${d
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
+  }
+
   function openCreate(type: ResType) {
     setForm({
       ...emptyForm,
       open: true,
       type,
       date: localDate(),
+      time: type === "Walk-In" ? nowTime24() : emptyForm.time,
       status: type === "Walk-In" ? "Seated" : "Confirmed",
     });
     setSidebarOpen(false);
@@ -180,6 +191,7 @@ export default function GuestManagerApp() {
       status: r.status,
       notes: r.notes,
       staff: r.staff,
+      departed: r.departed ?? "",
     });
   }
 
@@ -187,7 +199,17 @@ export default function GuestManagerApp() {
     setForm((f) => ({
       ...f,
       type: t,
+      time: t === "Walk-In" ? nowTime24() : f.time,
       status: t === "Walk-In" ? "Seated" : "Confirmed",
+    }));
+  }
+
+  // Status as an Arrived/Departed action toggle.
+  function setArrivalState(state: "Arrived" | "Departed") {
+    setForm((f) => ({
+      ...f,
+      status: state === "Departed" ? "Done" : "Seated",
+      departed: state === "Departed" ? to12h(nowTime24()) : "",
     }));
   }
 
@@ -224,7 +246,8 @@ export default function GuestManagerApp() {
       status: form.status,
       notes: form.notes,
       staff: form.staff,
-      arrival: "",
+      arrival: form.status === "Seated" ? to12h(form.time) : "",
+      departed: form.status === "Done" ? form.departed : "",
     };
     setReservations((prev) =>
       form.editId
@@ -243,8 +266,11 @@ export default function GuestManagerApp() {
 
   // Mark a guest as Done — frees up their table on the map.
   function markDone(id: number) {
+    const stamp = to12h(nowTime24());
     setReservations((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, status: "Done" as ResStatus } : r)),
+      prev.map((r) =>
+        r.id === id ? { ...r, status: "Done" as ResStatus, departed: stamp } : r,
+      ),
     );
     showToast("Marked as done · table freed");
   }
@@ -596,7 +622,9 @@ export default function GuestManagerApp() {
                             <td style={{ maxWidth: 180 }}>{r.notes || "—"}</td>
                             <td style={{ whiteSpace: "nowrap" }}>
                               {r.status === "Done" ? (
-                                <span className="gm-badge gm-badge-done">🏁 Done</span>
+                                <span className="gm-badge gm-badge-done">
+                                  🏁 Done{r.departed ? ` · ${r.departed}` : ""}
+                                </span>
                               ) : (
                                 <button
                                   className="gm-btn gm-btn-ghost"
@@ -953,26 +981,49 @@ export default function GuestManagerApp() {
                     onChange={(e) => setForm((f) => ({ ...f, table: e.target.value }))}
                   >
                     <option value="">-- Select --</option>
-                    {tableList.map((t) => (
-                      <option key={t.name}>{t.name}</option>
-                    ))}
+                    {tableList
+                      .filter((t) => {
+                        if (t.name === form.table) return true;
+                        if (t.override && t.override !== "available") return false;
+                        return !checkTableConflict(
+                          reservations,
+                          t.name,
+                          form.date,
+                          form.editId,
+                        );
+                      })
+                      .map((t) => (
+                        <option key={t.name}>{t.name}</option>
+                      ))}
                   </select>
                 </div>
               </div>
               <div className="gm-form-row">
                 <div className="gm-form-group">
                   <label>Status</label>
-                  <select
-                    value={form.status}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, status: e.target.value as ResStatus }))
-                    }
-                  >
-                    {STATUSES.map((s) => (
-                      <option key={s}>{s}</option>
-                    ))}
-                  </select>
+                  <div className="gm-type-toggle">
+                    <button
+                      type="button"
+                      className={`gm-type-opt${form.status !== "Done" ? " active-res" : ""}`}
+                      onClick={() => setArrivalState("Arrived")}
+                    >
+                      ✅ Arrived
+                    </button>
+                    <button
+                      type="button"
+                      className={`gm-type-opt${form.status === "Done" ? " active-wi" : ""}`}
+                      onClick={() => setArrivalState("Departed")}
+                    >
+                      🏁 Departed
+                    </button>
+                  </div>
+                  {form.status === "Done" && form.departed && (
+                    <p style={{ fontSize: 12, color: "var(--text-soft)", marginTop: 6 }}>
+                      Departed at {form.departed}
+                    </p>
+                  )}
                 </div>
+
                 <div className="gm-form-group">
                   <label>Staff</label>
                   <select

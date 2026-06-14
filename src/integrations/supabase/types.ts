@@ -37,6 +37,7 @@ export type Database = {
           arrival: string
           created_at: string
           date: string
+          departed: string
           id: string
           name: string
           notes: string
@@ -54,6 +55,7 @@ export type Database = {
           arrival?: string
           created_at?: string
           date: string
+          departed?: string
           id?: string
           name?: string
           notes?: string
@@ -71,6 +73,7 @@ export type Database = {
           arrival?: string
           created_at?: string
           date?: string
+          departed?: string
           id?: string
           name?: string
           notes?: string
