@@ -33,6 +33,7 @@ export async function loadReservations(): Promise<Reservation[]> {
     notes: r.notes,
     staff: r.staff,
     arrival: r.arrival,
+    departed: (r as { departed?: string }).departed ?? "",
   }));
 }
 
