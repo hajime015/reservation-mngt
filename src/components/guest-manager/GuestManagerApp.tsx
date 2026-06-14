@@ -191,6 +191,7 @@ export default function GuestManagerApp() {
       status: r.status,
       notes: r.notes,
       staff: r.staff,
+      departed: r.departed ?? "",
     });
   }
 
@@ -198,7 +199,17 @@ export default function GuestManagerApp() {
     setForm((f) => ({
       ...f,
       type: t,
+      time: t === "Walk-In" ? nowTime24() : f.time,
       status: t === "Walk-In" ? "Seated" : "Confirmed",
+    }));
+  }
+
+  // Status as an Arrived/Departed action toggle.
+  function setArrivalState(state: "Arrived" | "Departed") {
+    setForm((f) => ({
+      ...f,
+      status: state === "Departed" ? "Done" : "Seated",
+      departed: state === "Departed" ? to12h(nowTime24()) : "",
     }));
   }
 
