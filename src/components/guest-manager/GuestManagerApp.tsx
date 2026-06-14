@@ -622,7 +622,9 @@ export default function GuestManagerApp() {
                             <td style={{ maxWidth: 180 }}>{r.notes || "—"}</td>
                             <td style={{ whiteSpace: "nowrap" }}>
                               {r.status === "Done" ? (
-                                <span className="gm-badge gm-badge-done">🏁 Done</span>
+                                <span className="gm-badge gm-badge-done">
+                                  🏁 Done{r.departed ? ` · ${r.departed}` : ""}
+                                </span>
                               ) : (
                                 <button
                                   className="gm-btn gm-btn-ghost"
