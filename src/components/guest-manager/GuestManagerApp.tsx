@@ -366,19 +366,22 @@ export default function GuestManagerApp() {
   }));
   const maxTime = Math.max(1, ...timeBars.map((b) => b.count));
 
-  const filtered = reservations.filter((r) => {
-    const q = search.toLowerCase();
-    return (
-      (!fDate || r.date === fDate) &&
-      (!fType || r.type === fType) &&
-      (!fStatus || r.status === fStatus) &&
-      (!q ||
-        [r.name, r.phone, r.notes, r.table, r.staff]
-          .join(" ")
-          .toLowerCase()
-          .includes(q))
-    );
-  });
+  const filtered = reservations
+    .filter((r) => {
+      const q = search.toLowerCase();
+      return (
+        // Selecting a date pulls out the full history up to and including it.
+        (!fDate || r.date <= fDate) &&
+        (!fType || r.type === fType) &&
+        (!fStatus || r.status === fStatus) &&
+        (!q ||
+          [r.name, r.phone, r.notes, r.table, r.staff]
+            .join(" ")
+            .toLowerCase()
+            .includes(q))
+      );
+    })
+    .sort((a, b) => +new Date(b.date) - +new Date(a.date));
   const filteredPax = filtered.reduce((s, r) => s + (Number(r.pax) || 0), 0);
 
   const mapCounts: Record<TableState, number> = {
