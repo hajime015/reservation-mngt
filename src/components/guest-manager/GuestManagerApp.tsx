@@ -63,6 +63,7 @@ const emptyForm: FormState = {
   status: "Confirmed",
   notes: "",
   staff: "",
+  departed: "",
 };
 
 function typeBadge(t: ResType) {
