@@ -153,12 +153,21 @@ export default function GuestManagerApp() {
   }, []);
 
   // ---------- modal helpers ----------
+  function nowTime24() {
+    const d = new Date();
+    return `${d.getHours().toString().padStart(2, "0")}:${d
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
+  }
+
   function openCreate(type: ResType) {
     setForm({
       ...emptyForm,
       open: true,
       type,
       date: localDate(),
+      time: type === "Walk-In" ? nowTime24() : emptyForm.time,
       status: type === "Walk-In" ? "Seated" : "Confirmed",
     });
     setSidebarOpen(false);
