@@ -20,6 +20,7 @@ export interface Reservation {
   notes: string;
   staff: string;
   arrival: string;
+  departed: string;
 }
 
 export interface TableDef {
