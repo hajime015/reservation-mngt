@@ -38,7 +38,9 @@ export type Database = {
           created_at: string
           date: string
           departed: string
+          email: string
           id: string
+          is_waitlist: boolean
           name: string
           notes: string
           pax: number
@@ -56,7 +58,9 @@ export type Database = {
           created_at?: string
           date: string
           departed?: string
+          email?: string
           id?: string
+          is_waitlist?: boolean
           name?: string
           notes?: string
           pax?: number
@@ -74,7 +78,9 @@ export type Database = {
           created_at?: string
           date?: string
           departed?: string
+          email?: string
           id?: string
+          is_waitlist?: boolean
           name?: string
           notes?: string
           pax?: number
