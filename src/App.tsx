@@ -281,7 +281,7 @@ export default function App() {
   // remains the source of truth.
   useEffect(() => {
     if (!loggedUsername) return;
-    localStorage.setItem("restaurant_reservations", JSON.stringify(guests));
+    localStorage.setItem(getAccountKey("guests"), JSON.stringify(guests));
   }, [guests, loggedUsername]);
 
   useEffect(() => {
