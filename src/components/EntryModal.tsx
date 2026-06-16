@@ -32,7 +32,9 @@ export default function EntryModal({
   timezone,
   guestsKey
 }: EntryModalProps) {
-  const storageKey = "restaurant_reservations";
+  // Per-account namespaced cache key so customer PII is not shared across
+  // accounts on a shared device. Falls back to legacy key only if unset.
+  const storageKey = guestsKey || "restaurant_reservations";
 
   // Local Form States
   const [type, setType] = useState<EntryType>(EntryType.RESERVATION);
