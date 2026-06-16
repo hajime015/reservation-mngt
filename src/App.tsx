@@ -459,7 +459,7 @@ export default function App() {
   };
 
   const handleManualSaveAll = () => {
-    localStorage.setItem("restaurant_reservations", JSON.stringify(guests));
+    localStorage.setItem(getAccountKey("guests"), JSON.stringify(guests));
     localStorage.setItem("guest_rsvp_mngr_tables", JSON.stringify(tables));
     localStorage.setItem("guest_rsvp_mngr_staff", JSON.stringify(staffList));
     showToast("💾 Database memory persisted down to browser LocalStorage!");
