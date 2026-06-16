@@ -72,7 +72,20 @@ export default function App() {
   };
 
   const handleLogout = async () => {
+    // Remove any cached customer PII / datasets BEFORE the session ends so it
+    // cannot be read after logout or by the next user on a shared device.
+    try {
+      localStorage.removeItem(getAccountKey("guests"));
+      localStorage.removeItem("restaurant_reservations"); // legacy key cleanup
+      localStorage.removeItem("guest_rsvp_mngr_tables");
+      localStorage.removeItem("guest_rsvp_mngr_staff");
+    } catch {
+      /* ignore storage access errors */
+    }
     await supabase.auth.signOut();
+    setGuests([]);
+    setTables([]);
+    setStaffList([]);
     setLoggedUsername(null);
     showToast("🔓 Logged out of your session successfully");
   };
