@@ -570,7 +570,7 @@ export default function DashboardView({ guests, onEditGuest, onDeleteGuest, onUp
                 ))
               ) : (
                 <tr>
-                  <td colSpan={8} className="py-12 text-center">
+                  <td colSpan={9} className="py-12 text-center">
                     <span className="text-3xl block mb-2">🍽️</span>
                     <p className="text-sm text-[#8a9ab5] font-medium">No service reservations scheduled for today</p>
                   </td>
