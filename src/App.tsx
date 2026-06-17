@@ -215,9 +215,9 @@ export default function App() {
     if (!loggedUsername) return;
     let cancelled = false;
 
-    const cachedName = localStorage.getItem("restaurant_name");
-    const cachedPhoto = localStorage.getItem("restaurant_photo");
-    const cachedTz = localStorage.getItem("timezone");
+    const cachedName = localStorage.getItem(getAccountKey("restaurant_name"));
+    const cachedPhoto = localStorage.getItem(getAccountKey("restaurant_photo"));
+    const cachedTz = localStorage.getItem(getAccountKey("timezone"));
 
     (async () => {
       try {
