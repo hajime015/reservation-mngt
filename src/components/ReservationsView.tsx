@@ -42,7 +42,7 @@ export default function ReservationsView({
 
   // Filters State
   const [query, setQuery] = useState("");
-  const [quickDateFilter, setQuickDateFilter] = useState<string>("all");
+  const [quickDateFilter, setQuickDateFilter] = useState<string>("today");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [filterType, setFilterType] = useState<string>("");

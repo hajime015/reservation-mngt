@@ -473,6 +473,7 @@ export default function DashboardView({ guests, onEditGuest, onDeleteGuest, onUp
               <tr className="bg-navy text-white font-semibold uppercase tracking-wider text-[10px]">
                 <th className="py-4 px-5">Guest Name</th>
                 <th className="py-4 px-5">Type</th>
+                <th className="py-4 px-5">Time</th>
                 <th className="py-4 px-5">Pax</th>
                 <th className="py-4 px-5">Table Assignment</th>
                 <th className="py-4 px-5">Arrive / Depart</th>
@@ -500,6 +501,15 @@ export default function DashboardView({ guests, onEditGuest, onDeleteGuest, onUp
                         <span className={`px-2.5 py-1 text-[10px] font-bold rounded-lg uppercase ${getTypeBadgeClass(r.type)}`}>
                           {r.type === EntryType.WALK_IN ? "🚶 Walk-In" : "📋 RSVP"}
                         </span>
+                      )}
+                    </td>
+                    <td className="py-4 px-5 font-semibold text-navy whitespace-nowrap">
+                      {r.time ? (
+                        <span className="inline-flex items-center gap-1.5 text-[#4b5c73]">
+                          <Clock className="w-3.5 h-3.5 text-gold" /> {r.time}
+                        </span>
+                      ) : (
+                        <span className="text-[#8a9ab5]">—</span>
                       )}
                     </td>
                     <td className="py-4 px-5 font-bold text-navy">
@@ -560,7 +570,7 @@ export default function DashboardView({ guests, onEditGuest, onDeleteGuest, onUp
                 ))
               ) : (
                 <tr>
-                  <td colSpan={8} className="py-12 text-center">
+                  <td colSpan={9} className="py-12 text-center">
                     <span className="text-3xl block mb-2">🍽️</span>
                     <p className="text-sm text-[#8a9ab5] font-medium">No service reservations scheduled for today</p>
                   </td>

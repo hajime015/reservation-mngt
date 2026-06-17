@@ -215,9 +215,9 @@ export default function App() {
     if (!loggedUsername) return;
     let cancelled = false;
 
-    const cachedName = localStorage.getItem("restaurant_name");
-    const cachedPhoto = localStorage.getItem("restaurant_photo");
-    const cachedTz = localStorage.getItem("timezone");
+    const cachedName = localStorage.getItem(getAccountKey("restaurant_name"));
+    const cachedPhoto = localStorage.getItem(getAccountKey("restaurant_photo"));
+    const cachedTz = localStorage.getItem(getAccountKey("timezone"));
 
     (async () => {
       try {
@@ -256,7 +256,7 @@ export default function App() {
     const defaultName = cachedName || clientConfig.appName;
     setRestaurantName(defaultName);
     if (!cachedName) {
-      localStorage.setItem("restaurant_name", clientConfig.appName);
+      localStorage.setItem(getAccountKey("restaurant_name"), clientConfig.appName);
     }
     setRestaurantPhoto(cachedPhoto || null);
 
@@ -265,7 +265,7 @@ export default function App() {
       setTimezone(cachedTz);
     } else {
       setTimezone("AUTO");
-      localStorage.setItem("timezone", "AUTO");
+      localStorage.setItem(getAccountKey("timezone"), "AUTO");
     }
 
     setStorageMode("local");
