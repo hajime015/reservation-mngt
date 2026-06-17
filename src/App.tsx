@@ -256,7 +256,7 @@ export default function App() {
     const defaultName = cachedName || clientConfig.appName;
     setRestaurantName(defaultName);
     if (!cachedName) {
-      localStorage.setItem("restaurant_name", clientConfig.appName);
+      localStorage.setItem(getAccountKey("restaurant_name"), clientConfig.appName);
     }
     setRestaurantPhoto(cachedPhoto || null);
 
@@ -265,7 +265,7 @@ export default function App() {
       setTimezone(cachedTz);
     } else {
       setTimezone("AUTO");
-      localStorage.setItem("timezone", "AUTO");
+      localStorage.setItem(getAccountKey("timezone"), "AUTO");
     }
 
     setStorageMode("local");
