@@ -127,66 +127,9 @@ export default function EntryModal({
     }
   }, [isOpen, guestToEdit, initialType]);
 
-  // Phone-only lookup: when recording a NEW entry, typing a phone number that
-  // matches a prior reservation or a returning guest auto-fills the saved
-  // details (name, party size, notes, preferred table). Editing existing rows
-  // never auto-overwrites.
-  useEffect(() => {
-    if (!isOpen || guestToEdit) return;
-
-    const cleanPhone = String(phone || "").trim();
-    if (!cleanPhone) {
-      setRepeatGuestByPhone(null);
-      setHasPulledDetails(false);
-      return;
-    }
-
-    // 1) Look in the live reservation cache (most recent match wins).
-    let match: Guest | null = null;
-    try {
-      const cached = localStorage.getItem(storageKey);
-      if (cached) {
-        const list: Guest[] = JSON.parse(cached);
-        const hits = list.filter(
-          g => g.phone && String(g.phone).trim() === cleanPhone
-        );
-        if (hits.length) match = hits[hits.length - 1];
-      }
-    } catch {}
-
-    // 2) Fall back to the seeded returning-guest directory.
-    if (!match) {
-      const rg = returningGuestsList.find(
-        r => r.phone && String(r.phone).trim() === cleanPhone
-      );
-      if (rg) {
-        match = {
-          id: `returning_${cleanPhone}`,
-          name: rg.name,
-          phone: rg.phone,
-          type: rg.type,
-          date,
-          time: "",
-          pax: rg.pax || 2,
-          table: "Unassigned",
-          status: RsvpStatus.CONFIRMED,
-          notes: rg.notes || ""
-        };
-      }
-    }
-
-    if (match && !hasPulledDetails) {
-      setRepeatGuestByPhone(match);
-      setName(match.name || "");
-      if (match.pax) setPax(match.pax);
-      if (match.notes) setNotes(match.notes);
-      if (match.table && match.table !== "Unassigned") setTable(match.table);
-      setHasPulledDetails(true);
-    } else if (!match) {
-      setRepeatGuestByPhone(null);
-      setHasPulledDetails(false);
-    }
-  }, [phone, isOpen, guestToEdit, storageKey]);
+  // Repeat guest detection / auto-pull from previous data has been intentionally
+  // disabled: new Reservation and Walk-In entries must start fresh, with no
+  // history-based auto-fill from prior reservations or returning guests.
 
   // Listen to table / date / time changes for DOUBLE GUEST SEATING CONFLICT
   useEffect(() => {
