@@ -296,7 +296,7 @@ export default function ReservationsView({
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search guest list in real-time by name or phone number..."
+              placeholder="Search guest list in real-time by phone number..."
               className="w-full pl-11 pr-4 py-3 bg-white border border-gray-200 rounded-full text-xs text-navy placeholder-[#8a9ab5] focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
             />
           </div>
