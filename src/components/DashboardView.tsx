@@ -503,6 +503,15 @@ export default function DashboardView({ guests, onEditGuest, onDeleteGuest, onUp
                         </span>
                       )}
                     </td>
+                    <td className="py-4 px-5 font-semibold text-navy whitespace-nowrap">
+                      {r.time ? (
+                        <span className="inline-flex items-center gap-1.5 text-[#4b5c73]">
+                          <Clock className="w-3.5 h-3.5 text-gold" /> {r.time}
+                        </span>
+                      ) : (
+                        <span className="text-[#8a9ab5]">—</span>
+                      )}
+                    </td>
                     <td className="py-4 px-5 font-bold text-navy">
                       {r.pax}
                     </td>
