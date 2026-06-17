@@ -195,8 +195,9 @@ export default function ReservationsView({
     const matchesType = !filterType || g.type === filterType;
     const matchesStatus = !filterStatus || g.status === filterStatus;
 
-    const matchesQuery = !query || 
-      g.name.toLowerCase().includes(query.toLowerCase()) || 
+    // Lookups are restricted to phone number only. Name/email-based lookups are
+    // intentionally disabled so existing guest data can only be pulled by phone.
+    const matchesQuery = !query ||
       (g.phone && String(g.phone).toLowerCase().includes(query.toLowerCase()));
 
     return matchesDate && matchesType && matchesStatus && matchesQuery;
