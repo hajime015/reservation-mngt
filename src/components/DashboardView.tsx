@@ -473,6 +473,7 @@ export default function DashboardView({ guests, onEditGuest, onDeleteGuest, onUp
               <tr className="bg-navy text-white font-semibold uppercase tracking-wider text-[10px]">
                 <th className="py-4 px-5">Guest Name</th>
                 <th className="py-4 px-5">Type</th>
+                <th className="py-4 px-5">Time</th>
                 <th className="py-4 px-5">Pax</th>
                 <th className="py-4 px-5">Table Assignment</th>
                 <th className="py-4 px-5">Arrive / Depart</th>
