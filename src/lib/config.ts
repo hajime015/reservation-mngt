@@ -18,7 +18,7 @@ function getBool(key: string, fallback = false): boolean {
 
 export const clientConfig = {
   /** Application display name (e.g. restaurant name) */
-  appName: getEnv("VITE_APP_NAME", "Guest Manager"),
+  appName: getEnv("VITE_APP_NAME", "Kitchen Order Dashboard"),
 
   /** Base URL for API requests. Empty string = localStorage-only mode. */
   apiBaseUrl: getEnv("VITE_API_BASE_URL", ""),

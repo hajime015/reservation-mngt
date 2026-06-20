@@ -1,15 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import App from "../App";
-import { clientConfig } from "../lib/config";
+import App from "../kos/App";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: `${clientConfig.appName} - Restaurant Reservations` },
-      { name: "description", content: "Manage restaurant reservations, walk-ins, table maps, and staff with a beautiful real-time dashboard." },
-      { property: "og:title", content: clientConfig.appName },
-      { property: "og:description", content: "Restaurant reservations, table maps, and staff management." },
+      { title: "Kitchen Order Dashboard" },
+      {
+        name: "description",
+        content:
+          "Premium kitchen ordering and inventory system. Load warehouse catalogs, draft orders with category filters, and export order manifests.",
+      },
+      { property: "og:title", content: "Kitchen Order Dashboard" },
+      {
+        property: "og:description",
+        content:
+          "Premium kitchen ordering and inventory system for warehouse catalogs and order manifests.",
+      },
     ],
   }),
   component: Index,
