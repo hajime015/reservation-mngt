@@ -11,7 +11,10 @@ export const auth = {
 
 export const googleProvider = {};
 
-export async function signInWithPopup(): Promise<never> {
+export async function signInWithPopup(
+  _auth?: unknown,
+  _provider?: unknown,
+): Promise<{ user: { uid: string; email: string | null; displayName: string | null; photoURL: string | null } }> {
   const err = new Error(
     "Google Sign-In is not configured in this build. Please use the Local Admin or Staff login.",
   );
